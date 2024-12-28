@@ -11,6 +11,7 @@ builder.Services.AddControllers();
 //builder.Services.AddSwaggerGen();
 builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
                                                                 options.UseSqlServer(builder.Configuration.GetConnectionString("DatingConnection")));
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -22,7 +23,8 @@ var app = builder.Build();
 //}
 
 //app.UseAuthorization();
-
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
 app.MapControllers();
+
 
 app.Run();
